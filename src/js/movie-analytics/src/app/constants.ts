@@ -1,2 +1,2 @@
 
-export const GITHUB_URL = "https://github.gatech.edu/cang7/movie-analytics";
+export const GITHUB_URL = "https://github.com/abd5ge/movievis";

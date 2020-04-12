@@ -1,6 +1,4 @@
-
-Demo:
-https://github.gatech.edu/pages/cang7/movie-analytics/index.html
+Site located at https://movievis.com.
 
 Installation:
 To use this project, download to your local environment.

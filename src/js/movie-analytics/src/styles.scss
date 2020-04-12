@@ -1,89 +1,95 @@
 /* You can add global styles to this file, and also import other style files */
 
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 @import '~@angular/material/theming';
 
 @include mat-core();
 
 
-/* go to http://mcg.mbitson.com/ to change this; you'll want to output in 'Angular JS 2 (Material 2)' format */
-$md-movieprimary: (
-    50 : #feefe0,
-    100 : #fcd8b3,
-    200 : #fabe80,
-    300 : #f8a34d,
-    400 : #f79026,
-    500 : #f57c00,
-    600 : #f47400,
-    700 : #f26900,
-    800 : #f05f00,
-    900 : #ee4c00,
-    A100 : #ffffff,
-    A200 : #ffe9e1,
-    A400 : #ffc3ae,
-    A700 : #ffb095,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
+// /* go to http://mcg.mbitson.com/ to change this; you'll want to output in 'Angular JS 2 (Material 2)' format */
+// $md-movieprimary: (
+//     50 : #feefe0,
+//     100 : #fcd8b3,
+//     200 : #fabe80,
+//     300 : #f8a34d,
+//     400 : #f79026,
+//     500 : #f57c00,
+//     600 : #f47400,
+//     700 : #f26900,
+//     800 : #f05f00,
+//     900 : #ee4c00,
+//     A100 : #ffffff,
+//     A200 : #ffe9e1,
+//     A400 : #ffc3ae,
+//     A700 : #ffb095,
+//     contrast: (
+//         50 : #000000,
+//         100 : #000000,
+//         200 : #000000,
+//         300 : #000000,
+//         400 : #000000,
+//         500 : #000000,
+//         600 : #000000,
+//         700 : #000000,
+//         800 : #ffffff,
+//         900 : #ffffff,
+//         A100 : #000000,
+//         A200 : #000000,
+//         A400 : #000000,
+//         A700 : #000000,
+//     )
+// );
 
 
-$md-moviesecondary: (
-    50 : #e1f3fc,
-    100 : #b3e1f7,
-    200 : #81cdf2,
-    300 : #4fb9ed,
-    400 : #29aae9,
-    500 : #039be5,
-    600 : #0393e2,
-    700 : #0289de,
-    800 : #027fda,
-    900 : #016dd3,
-    A100 : #fbfdff,
-    A200 : #c8e1ff,
-    A400 : #95c5ff,
-    A700 : #7bb8ff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
+// $md-moviesecondary: (
+//     50 : #e1f3fc,
+//     100 : #b3e1f7,
+//     200 : #81cdf2,
+//     300 : #4fb9ed,
+//     400 : #29aae9,
+//     500 : #039be5,
+//     600 : #0393e2,
+//     700 : #0289de,
+//     800 : #027fda,
+//     900 : #016dd3,
+//     A100 : #fbfdff,
+//     A200 : #c8e1ff,
+//     A400 : #95c5ff,
+//     A700 : #7bb8ff,
+//     contrast: (
+//         50 : #000000,
+//         100 : #000000,
+//         200 : #000000,
+//         300 : #000000,
+//         400 : #000000,
+//         500 : #ffffff,
+//         600 : #ffffff,
+//         700 : #ffffff,
+//         800 : #ffffff,
+//         900 : #ffffff,
+//         A100 : #000000,
+//         A200 : #000000,
+//         A400 : #000000,
+//         A700 : #000000,
+//     )
+// );
 
-// $movie-app-primary: mat-palette($mat-indigo);
-// $movie-app-accent: mat-palette($mat-amber);
-// $movie-app-primary: mat-palette($mat-orange);
-// $movie-app-accent: mat-palette($mat-light-blue);
+$movie-app-primary: mat-palette($mat-indigo);
+$movie-app-accent: mat-palette($mat-amber);
+// // $movie-app-primary: mat-palette($mat-orange);
+// // $movie-app-accent: mat-palette($mat-light-blue);
 
 
-$movie-app-primary: mat-palette($md-movieprimary);
-$movie-app-accent: mat-palette($md-moviesecondary);
+// $movie-app-primary: mat-palette($md-movieprimary);
+// $movie-app-accent: mat-palette($md-moviesecondary);
 $movie-app-warn: mat-palette($mat-red);
 
-// $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
+// // $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
 $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
 
 @include angular-material-theme($movie-app-theme);
+
+body {
+  margin: 0;
+}

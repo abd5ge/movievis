@@ -27,6 +27,7 @@ export class TableauDirective implements AfterViewInit, OnDestroy {
         } else {
           options.onFirstInteractive = this.addElevation.bind(this);
         }
+        options.device = "desktop";
       }
       this.viz = new window.tableau.Viz(this.el.nativeElement, this.url, options);
     }

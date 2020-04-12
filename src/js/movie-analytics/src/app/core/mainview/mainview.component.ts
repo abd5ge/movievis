@@ -1,36 +1,50 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router, Route } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { GITHUB_URL } from 'src/app/constants';
 @Component({
   selector: 'app-mainview',
   template: `
-  <mat-toolbar class="mat-elevation-z2" id="header" color='primary'>
-    <span id="title" class="mat-title">
-      <button mat-raised-button color="accent" [matMenuTriggerFor]="navMenu">{{title}}</button>
-      <mat-menu #navMenu="matMenu">
-        <button mat-menu-item color="accent" (click)="navigate(item)" [disabled]="item.activeRoute" *ngFor="let item of navItems">{{item.display}}</button>
-      </mat-menu>
-    </span>
-    <span class="spacer"></span>
-    <span id='middle'>
-      <mat-button-toggle-group (change)="clickSheet($event)">
-        <mat-button-toggle [id]="item.index" [value]="item.name" [checked]="item.sheet.getIsActive()" *ngFor="let item of sheets; trackBy: trackByFunc">
-          {{item.name}}
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </span>
-    <span class="spacer"></span>
-    <span>
-      <a mat-icon-button disableRipple="true" href="https://github.gatech.edu/cang7/movie-analytics">
-        <fa-icon [icon]="['fab', 'github']" style="display: flex; justify-content: center" size="3x"></fa-icon>
-      </a>
-    </span>
-  </mat-toolbar>
+  <div id="navbar">
+    <mat-toolbar class="mat-elevation-z6" id="header" color='primary'>
+      <span id="title" class="mat-title">
+        <button mat-raised-button color="accent" [matMenuTriggerFor]="navMenu">{{title}}</button>
+        <mat-menu #navMenu="matMenu">
+          <button mat-menu-item color="accent" (click)="navigate(item)" [disabled]="item.activeRoute" *ngFor="let item of navItems">{{item.display}}</button>
+        </mat-menu>
+      </span>
+      <span class="spacer"></span>
+      <span id='middle'>
+        <mat-button-toggle-group (change)="clickSheet($event)">
+          <mat-button-toggle [id]="item.index" [value]="item.name" [checked]="item.sheet.getIsActive()" *ngFor="let item of sheets; trackBy: trackByFunc">
+            {{item.name}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </span>
+      <span class="spacer"></span>
+      <span>
+        <a mat-icon-button disableRipple="true" [href]="GITHUB_URL">
+          <fa-icon [icon]="['fab', 'github']" style="display: flex; justify-content: center" size="3x"></fa-icon>
+        </a>
+      </span>
+    </mat-toolbar>
+  </div>
+  <!-- <span class="spacer"></span> -->
   <ng-content></ng-content>
   `,
   styles: [
+    `#navbar {
+      display: block;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+    }`,
     `#header {
-      margin: 0px auto 5px;
+      display: flex;
+      /* margin: 0px auto 5px; */
+      /* padding: 0px; */
     }`,
     `#header>span {
       align-items: center;
@@ -42,6 +56,8 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class MainviewComponent implements OnInit {
+
+  public readonly GITHUB_URL = GITHUB_URL;
 
   title?: string = 'Movie Analytics';
 
