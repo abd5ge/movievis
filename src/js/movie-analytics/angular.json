@@ -45,7 +45,7 @@
               "vendorChunk": false,
               "buildOptimizer": true,
               "aot": true,
-              "baseHref": "/pages/cang7/movie-analytics/",
+              "baseHref": "/",
               "budgets": [
                 {
                   "type": "initial",
