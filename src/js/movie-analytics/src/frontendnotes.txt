@@ -1,0 +1,15 @@
+For each graph, describe caveats
+
+Overall:
+
+bar graph of # of lines spoken by gender and race
+bechdel across years
+
+scenes:
+power agency/sentimentality
+bechdel
+
+character network graph:
+
+
+methodology page describing approach, along with limitations
