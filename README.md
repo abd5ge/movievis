@@ -53,7 +53,7 @@ To use Movie Vis cd into the project space and run the wrapper py file. The foll
 
 Example: 
 
-    python wrapper.py --title '10 things i hate about you' -o output --tmdb_key 1234567891010987654321`
+    python wrapper.py --title "10 things i hate about you" -o output --tmdb_key 1234567891010987654321
 
 For more information use the --help argument to see a list of available options. 
 
