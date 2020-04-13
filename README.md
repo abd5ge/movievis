@@ -35,7 +35,7 @@ This project has been designed to allow end users to easily collect film data fo
 To use this project, download this repo to a local environment. Once you've downloaded, cd into the project space using a terminal or command line interface. 
 
     cd movievis/src/python/process_scripts/
-    pip install requirements.txt
+    pip install -r requirements.txt
 
 Please note, if you are using a virtual environment for this project you will need to install opencv-python in your local environment and copy this package from it's site package location over to the virtualenv. 
 
