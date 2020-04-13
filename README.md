@@ -16,9 +16,7 @@ Of course, this is not a perfect approach. For example, if the script being pars
 -	Data Processing
 From the step above we were able to collect data on over 1200 films. Film scripts in this set that were poorly mapped to celebrity metadata were identified as a bad match. However, we included these films in our visualization to show the pitfalls of text analysis.
 
-The data collected were stored as json objects with TSV counterparts. These TSV files were then inserted into a postgres RDS with the following relationship:
-
-[DIAGRAM IMAGE]
+The data collected were stored as json objects with TSV counterparts. These TSV files were then inserted into a postgres RDS. Relationships were built based on the TMDb_Id as well as the Celeb_Id, where the Celeb_Id is unique to a celebrity _within_ a film. This [diagram](https://drive.google.com/open?id=17haS84qs4WqAg47oEHj6jlZRZQerQ7MQ) provides an idea of how to structure your dataset if using this project for your own analysis.
 
 - Data Analysis
 Our analysis were separated into three parts: Bechdel Scoring, Power/Agency Scoring, and Character Graph Mapping.
@@ -34,7 +32,9 @@ We visualize the data and analysis collected through Tableau. We use Tableau pub
 
 ## Installation
 
-To use this project download this repo to a local environment. Once you've downloaded, cd into the project space using a terminal or command line interface. 
+This project has been designed to allow end users to easily collect film data for their own analysis. We've provided the source files of our analysis here. However, installing and running this project will not provide any analyzed results. Running this project will collect data so that the user can implement their own analysis. Feel free to use our text analysis & network mapping as a part of your project, just remember to install the py packages for those scripts.
+
+To use this project, download this repo to a local environment. Once you've downloaded, cd into the project space using a terminal or command line interface. 
 
     cd movievis/src/python/process_scripts/
     pip install requirements.txt
