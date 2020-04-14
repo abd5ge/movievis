@@ -1,26 +1,43 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ContentChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, Route } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GITHUB_URL } from 'src/app/constants';
+import { TableauDirective } from '../tableau.directive';
 @Component({
   selector: 'app-mainview',
   template: `
   <div id="navbar">
     <mat-toolbar class="mat-elevation-z6" id="header" color='primary'>
-      <span id="title" class="mat-title">
-        <button mat-raised-button color="accent" [matMenuTriggerFor]="navMenu">{{title}}</button>
-        <mat-menu #navMenu="matMenu">
-          <button mat-menu-item color="accent" (click)="navigate(item)" [disabled]="item.activeRoute" *ngFor="let item of navItems">{{item.display}}</button>
-        </mat-menu>
-      </span>
+      <button mat-button style="padding: 0" (click)="router.navigate(['landing'])"><img src="movievislogo.png" alt="image" height="36" width="200"></button>
       <span class="spacer"></span>
-      <span id='middle'>
-        <mat-button-toggle-group (change)="clickSheet($event)">
-          <mat-button-toggle [id]="item.index" [value]="item.name" [checked]="item.sheet.getIsActive()" *ngFor="let item of sheets; trackBy: trackByFunc">
-            {{item.name}}
-          </mat-button-toggle>
-        </mat-button-toggle-group>
+      <span >
+          <button mat-button
+          (click)="navigate(item)"
+          *ngFor="let item of navItems">{{item.display}}</button>
       </span>
+    </mat-toolbar>
+  </div>
+  <div *ngIf="showTitle" id="titlebar">
+    <mat-toolbar color='primary'>
+      <span id="title" class="mat-title">
+        <h2 mat-h2>{{title}}</h2>
+      </span>
+    </mat-toolbar>
+  </div>
+  <mat-sidenav-container autosize>
+    <mat-sidenav mode="side" [opened]="showSideNav">
+      <mat-button-toggle-group (change)="clickSheet($event)" [vertical]="true">
+        <mat-button-toggle [id]="item.index" [value]="item.name" [checked]="item.isActive" *ngFor="let item of sheets; trackBy: trackByFunc">
+          {{item.name}}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <div id="footer">
+    <mat-toolbar color='primary'>
       <span class="spacer"></span>
       <span>
         <a mat-icon-button disableRipple="true" [href]="GITHUB_URL">
@@ -29,8 +46,6 @@ import { GITHUB_URL } from 'src/app/constants';
       </span>
     </mat-toolbar>
   </div>
-  <!-- <span class="spacer"></span> -->
-  <ng-content></ng-content>
   `,
   styles: [
     `#navbar {
@@ -40,26 +55,33 @@ import { GITHUB_URL } from 'src/app/constants';
       top: 0;
       left: 0;
       right: 0;
+      z-index: 9999;
     }`,
     `#header {
       display: flex;
-      /* margin: 0px auto 5px; */
-      /* padding: 0px; */
     }`,
     `#header>span {
       align-items: center;
     }`, `.spacer {
       flex: 1 1 auto;
     }`, `#title {
-      margin: auto;
+      margin: auto 0;
     }`
   ]
 })
-export class MainviewComponent implements OnInit {
+export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public readonly GITHUB_URL = GITHUB_URL;
 
+  @ContentChild(TableauDirective) tb: TableauDirective;
+
   title?: string = 'Movie Analytics';
+
+  @Input() showTitle: boolean = true;
+
+  @Input() showSideNav: boolean = true;
+
+  @Output() activeSheetName: EventEmitter<string> = new EventEmitter<string>();
 
   private _sheets: Sheet[] = [];
   @Input()
@@ -72,6 +94,10 @@ export class MainviewComponent implements OnInit {
       isActive: x.getIsActive(),
       sheet: x
     }));
+    const activeSheet = this._sheets.find(s => s.sheet.getIsActive());
+    if(activeSheet) {
+      this.activeSheetName.emit(activeSheet.name);
+    }
   }
   get sheets() {
     return this._sheets;
@@ -86,11 +112,11 @@ export class MainviewComponent implements OnInit {
   }
 
   navItems: Array<{ path?: string, display?: string, activeRoute: boolean }> = [];
-  private readonly subs: Subscription[] = [];
+  private subs: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
   ) { }
 
 
@@ -112,6 +138,16 @@ export class MainviewComponent implements OnInit {
     }));
   }
 
+  ngAfterViewInit(): void {
+    this.subs.push(this.tb.onFirstInteractive.subscribe((e: any) => {
+      this.sheets = this.tb.viz.getWorkbook().getPublishedSheetsInfo();
+    }))
+    this.subs.push(this.tb.onTabSwitch.subscribe((e: any) => {
+      this.activeSheetName.emit(e.getNewSheetName());
+      this.sheets = this.sheets.map(x => x.sheet);
+    }));
+  }
+
   private getRoutesFlatten(parent_path: string, routes: Route[]): { fullpath: string, route: Route }[] {
     let ret: { fullpath: string, route: Route }[] = [];
     routes.forEach(r => {
@@ -129,12 +165,7 @@ export class MainviewComponent implements OnInit {
 
   clickSheet(e: { value: string }): void {
     const sheet: any = this.sheets.find(x => x.name == e.value).sheet;
-    sheet.getWorkbook().activateSheetAsync(sheet.getIndex())
-      .then(
-        setTimeout(() => {
-          this.sheets = this.sheets.map(x => x.sheet);
-        })
-      );
+    sheet.getWorkbook().activateSheetAsync(sheet.getIndex());
   }
 
   trackByFunc(_: number, item: Sheet): any {
@@ -143,6 +174,11 @@ export class MainviewComponent implements OnInit {
 
   navigate(item: any) {
     this.router.navigate(item.path.split('/'));
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(s => s.unsubscribe());
+    this.subs = [];
   }
 }
 

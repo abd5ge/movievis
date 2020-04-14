@@ -1,0 +1,18 @@
+#main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 8px;
+}
+
+#viz {
+  display: flex;
+  justify-content: right;
+  padding: 4px;
+}

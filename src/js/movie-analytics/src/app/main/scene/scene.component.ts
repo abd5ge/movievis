@@ -6,18 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./scene.component.css']
 })
 export class SceneComponent {
-  sheets: any[] = [];
-  // routes = routes;
+
+  activeSheetName: string = '';
 
   public readonly vizOptions: any = {
     hideTabs: true,
     hideToolbar: true,
-    onFirstInteractive: this.handleVizLoad.bind(this)
   };
 
   constructor() { }
 
-  handleVizLoad(e: any): void {
-    this.sheets = e.getViz().getWorkbook().getPublishedSheetsInfo();
-  }
 }

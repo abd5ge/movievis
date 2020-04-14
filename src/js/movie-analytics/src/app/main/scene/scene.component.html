@@ -1,6 +1,28 @@
-<app-mainview [sheets]="sheets" color="primary">
-  <div tableau #viz
-  url="https://public.tableau.com/views/GT-Movie-Analytics-test/NetworkDB?:display_count=y&:origin=viz_share_link"
-  style="display: flex; justify-content: center"
-  [options]="vizOptions"></div>
+<app-mainview color="primary" (activeSheetName)="activeSheetName = $event">
+  <div id="main">
+    <div id="text">
+      <mat-card [ngSwitch]="activeSheetName">
+        <mat-card-header>
+          <mat-card-title>Character Network</mat-card-title>
+          <mat-card-subtitle>{{activeSheetName}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            The graph below is a representation of character interactions within the narrative.
+            Each character represents a node (circle) where the size of the node is
+            dependent on the number of scenes that character appears in.
+            If two characters appear in a scene together, they are linked by a blue line.
+            This analysis provides insight into character narrative importance,
+            as measured by their centrality to the story (node size) and connectedness to other characters (links).
+            The filter allows you to add/remove characters from the graph based on gender and racial group membership.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div tableau #viz
+    id="viz"
+    url="https://public.tableau.com/views/GT-Movie-Analytics-test/WordsSpokenInFilm?:display_count=y&:origin=viz_share_link"
+    style="display: flex; justify-content: right"
+    [options]="vizOptions"></div>
+  </div>
 </app-mainview>

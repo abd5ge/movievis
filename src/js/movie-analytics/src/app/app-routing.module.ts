@@ -12,7 +12,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     MainModule,
-    RouterModule.forRoot(routes, {enableTracing: true})],
+    RouterModule.forRoot(routes, {enableTracing: false})],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

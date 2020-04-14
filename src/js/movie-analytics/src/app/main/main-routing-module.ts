@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from '@angular/router';
 import { SceneComponent } from './scene/scene.component';
 import { AnalysisSummaryComponent } from './analysis-summary/analysis-summary.component';
+import { MethodologyComponent } from './methodology/methodology.component';
 
 export const routes: Routes = [
   {
@@ -10,7 +11,7 @@ export const routes: Routes = [
     component: SceneComponent,
     data: {
       display: 'Landing Page',
-      show: true
+      show: false
     },
   },
   {
@@ -25,6 +26,13 @@ export const routes: Routes = [
     component: AnalysisSummaryComponent,
     data: {
       display: 'Summary Analysis',
+      show: true
+    }
+  }, {
+    path: 'approach',
+    component: MethodologyComponent,
+    data: {
+      display: 'Approach',
       show: true
     }
   }

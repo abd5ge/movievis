@@ -88,6 +88,21 @@ $movie-app-warn: mat-palette($mat-red);
 // // $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
 $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
 
+// @mixin mix-app-theme($movie-app-theme) {
+//   $primary: map-get($movie-app-theme, primary);
+
+//   .mat-button-toggle-checked {
+//     background-color: mat-color($primary);
+//     font-weight: bold;
+
+//     .mat-button-toggle-label-content {
+//       color: $light-primary-text;
+//     }
+//   }
+// }
+
+// @include mix-app-theme($movie-app-theme);
+
 @include angular-material-theme($movie-app-theme);
 
 body {
