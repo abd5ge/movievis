@@ -9,7 +9,7 @@ import itertools
 import concurrent.futures
 
 
-import editdistance
+#import editdistance
 import pandas as pd
 try:
     import pylcs
