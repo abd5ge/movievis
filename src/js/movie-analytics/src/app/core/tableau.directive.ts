@@ -1,12 +1,13 @@
 import { Directive, AfterViewInit, OnDestroy, ElementRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Subscription, ReplaySubject, Subject } from 'rxjs';
+import { Subscription, ReplaySubject, Subject, Observable } from 'rxjs';
 
 @Directive({
   selector: '[tableau]'
 })
 export class TableauDirective implements AfterViewInit, OnDestroy {
-  @Input('url') url: String;
-  @Input('options') options: any;
+  @Input() url: String;
+  @Input() options: any;
+  @Input() elevation: number = 1;
 
   @Output() onTabSwitch: EventEmitter<any> = new EventEmitter<any>();
   // @Output() onFirstInteractive: EventEmitter<any> = new EventEmitter<any>();
@@ -14,9 +15,10 @@ export class TableauDirective implements AfterViewInit, OnDestroy {
   private _onFirstInteractive: Subject<any> = new ReplaySubject<any>(1);
 
 
-  get onFirstInteractive() {
+  get onFirstInteractive(): Observable<any> {
     return this._onFirstInteractive.asObservable();
   }
+
 
   public viz: any;
 
@@ -42,9 +44,6 @@ export class TableauDirective implements AfterViewInit, OnDestroy {
         options.onFirstInteractive = (...args: any[]) => this._onFirstInteractive.next(...args);
         options.device = "desktop";
       }
-      if(!options.width) {
-        // options.width = '75vw'
-      }
       this.viz = new window.tableau.Viz(this.el.nativeElement, this.url, options);
     }
     this.subs.push(this.onTabSwitch.subscribe((e: any) => this.sheetChanged(e.getViz())));
@@ -53,7 +52,7 @@ export class TableauDirective implements AfterViewInit, OnDestroy {
   private onVizLoad() {
       const frame = (<HTMLDivElement>this.el.nativeElement).firstChild;
       if (frame) {
-        (<HTMLIFrameElement>frame).classList.add('mat-elevation-z2');
+        (<HTMLIFrameElement>frame).classList.add('mat-elevation-z' + this.elevation);
       }
       this.viz.addEventListener(window.tableau.TableauEventName.TAB_SWITCH, (...args: any[]) => this.onTabSwitch.emit(...args));
       setTimeout(() => this.sheetChanged(this.viz));

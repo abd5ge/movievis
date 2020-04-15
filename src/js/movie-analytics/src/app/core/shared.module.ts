@@ -6,7 +6,7 @@ import { MaterialModule } from './material/material.module';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-
+// Really a shared module at this point.
 @NgModule({
   declarations: [TableauDirective, MainviewComponent],
   imports: [
@@ -22,8 +22,8 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
   ]
 
 })
-export class CoreModule {
-  constructor(private library: FaIconLibrary) {
+export class SharedModule {
+  constructor(library: FaIconLibrary) {
     library.addIcons(faGithub);
   }
 }

@@ -1,9 +1,11 @@
 <app-mainview color="primary" [filterTo]="sheetFilter">
-  <div tableau #viz
-  url="https://public.tableau.com/views/final_15868844272500/LinesSpokenByGender?:display_count=y&publish=yes&:origin=viz_share_link"
-  style="display: flex; justify-content: center"
-  [options]="vizOptions"></div>
-  <!-- url="https://public.tableau.com/views/MovieAnalysis-PercentageofLinesSpoken/PercentageofLinesSpoken-Race?:display_count=y&:origin=viz_share_link" -->
-  <!-- url="https://public.tableau.com/views/final_15868844272500/RevenuebyDecade?:display_count=y&:origin=viz_share_link" -->
-  <!-- url="https://public.tableau.com/views/GT-Movie-Analytics-test/ActionbyCharacter?:display_count=y&:origin=viz_share_link" -->
+  <div id="main">
+    <div
+      tableau
+      #viz
+      id="viz"
+      url="https://public.tableau.com/views/final_15868844272500/LinesSpokenByGender?:display_count=y&publish=yes&:origin=viz_share_link"
+      [options]="vizOptions"
+    ></div>
+  </div>
 </app-mainview>

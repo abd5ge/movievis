@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-analysis-summary',
   templateUrl: './analysis-summary.component.html',
-  styleUrls: ['./analysis-summary.component.css']
+  styleUrls: ['./../viz-pages.css']
 })
 export class AnalysisSummaryComponent {
 
@@ -17,7 +17,5 @@ export class AnalysisSummaryComponent {
     hideTabs: true,
     hideToolbar: true,
   };
-
-  constructor() { }
 
 }

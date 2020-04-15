@@ -16,20 +16,22 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'scene',
-    component: SceneComponent,
-    data: {
-      display: 'Scene Analysis',
-      show: true
-    }
-  }, {
     path: 'summary',
     component: AnalysisSummaryComponent,
     data: {
       display: 'Summary Analysis',
       show: true
     }
-  }, {
+  },
+  {
+    path: 'scene',
+    component: SceneComponent,
+    data: {
+      display: 'Scene Analysis',
+      show: true
+    }
+  },
+  {
     path: 'approach',
     component: MethodologyComponent,
     data: {

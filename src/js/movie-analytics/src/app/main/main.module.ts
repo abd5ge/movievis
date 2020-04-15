@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SceneComponent } from './scene/scene.component';
 import { MainRoutingModule } from './main-routing-module';
-import { CoreModule } from '../core/core.module';
+import { SharedModule } from '../core/shared.module';
 import { AnalysisSummaryComponent } from './analysis-summary/analysis-summary.component';
 import { MethodologyComponent } from './methodology/methodology.component';
 import { LandingComponent } from './landing/landing.component';
@@ -14,7 +14,7 @@ import { LandingComponent } from './landing/landing.component';
   imports: [
     CommonModule,
     MainRoutingModule,
-    CoreModule
+    SharedModule
   ],
   exports: [
     MainRoutingModule

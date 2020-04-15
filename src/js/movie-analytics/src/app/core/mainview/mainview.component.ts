@@ -14,15 +14,13 @@ export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ContentChild(TableauDirective) tb: TableauDirective;
 
-  title?: string = 'Movie Analytics';
+  title?= 'Movie Analytics';
 
-  @Input() showTitle: boolean = true;
+  @Input() showTitle = true;
 
-  @Input() showSideNav: boolean = true;
+  @Input() showSideNav = true;
 
   @Input() filterTo: string[] = [];
-
-  @Output() activeSheetName: EventEmitter<string> = new EventEmitter<string>();
 
   private _sheets: Sheet[] = [];
   @Input()
@@ -41,11 +39,8 @@ export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
       isActive: x.getIsActive(),
       sheet: x
     }));
-    const activeSheet = this._sheets.find(s => s.sheet.getIsActive());
-    if (activeSheet) {
-      this.activeSheetName.emit(activeSheet.name);
-    }
   }
+
   get sheets() {
     return this._sheets;
   }
@@ -91,7 +86,6 @@ export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sheets = this.tb.viz.getWorkbook().getPublishedSheetsInfo();
       }))
       this.subs.push(this.tb.onTabSwitch.subscribe((e: any) => {
-        this.activeSheetName.emit(e.getNewSheetName());
         this.sheets = this.sheets.map(x => x.sheet);
       }));
     }
@@ -135,8 +129,6 @@ interface Sheet {
   name: string;
   index: number;
   workbook: any;
-  // url: string;
-  // sheetType: string;
   isHidden: boolean;
   isActive: boolean;
   sheet: any;
