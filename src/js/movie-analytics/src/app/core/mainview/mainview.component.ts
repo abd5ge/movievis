@@ -29,7 +29,7 @@ export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
   set sheets(sheets: any[]) {
 
     let tmp = (sheets || []).filter(x => !x.getIsHidden());
-    if(this.filterTo != null && this.filterTo.length > 0) {
+    if (this.filterTo != null && this.filterTo.length > 0) {
       tmp = tmp.filter(x => this.filterTo.includes(x.getName()));
     }
 
@@ -42,7 +42,7 @@ export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
       sheet: x
     }));
     const activeSheet = this._sheets.find(s => s.sheet.getIsActive());
-    if(activeSheet) {
+    if (activeSheet) {
       this.activeSheetName.emit(activeSheet.name);
     }
   }
@@ -86,13 +86,15 @@ export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.subs.push(this.tb.onFirstInteractive.subscribe((e: any) => {
-      this.sheets = this.tb.viz.getWorkbook().getPublishedSheetsInfo();
-    }))
-    this.subs.push(this.tb.onTabSwitch.subscribe((e: any) => {
-      this.activeSheetName.emit(e.getNewSheetName());
-      this.sheets = this.sheets.map(x => x.sheet);
-    }));
+    if (this.tb) {
+      this.subs.push(this.tb.onFirstInteractive.subscribe((e: any) => {
+        this.sheets = this.tb.viz.getWorkbook().getPublishedSheetsInfo();
+      }))
+      this.subs.push(this.tb.onTabSwitch.subscribe((e: any) => {
+        this.activeSheetName.emit(e.getNewSheetName());
+        this.sheets = this.sheets.map(x => x.sheet);
+      }));
+    }
   }
 
   private getRoutesFlatten(parent_path: string, routes: Route[]): { fullpath: string, route: Route }[] {

@@ -1,83 +1,86 @@
 <app-mainview color="primary" showSideNav="false">
   <div id="main">
     <h1 mat-h2>Data Acquisition and Integration</h1>
-    <p>
-      We first scraped movie scripts from IMSDB. Movie script data is generally
-      unstructured text. This presented a challenge, as some of the analyses we
-      wished to do required having the actual dialogue lines. We thus wrote a
-      program that would:
-    </p>
-    <ol>
-      <li>Find characters in the script</li>
-      <li>Extract the lines for said characters</li>
-      <li>Find scenes within the script</li>
-      <li>Associate scenes to the lines of dialogue and the characters</li>
-    </ol>
-    <p>
-      Due to challenges with processing unstructured text, along with some
-      differences in the way IMSDB handles their pages for scripts, not all
-      movies on IMSDB were able to be processed. We still ended up with over
-      1000 scripts, and so we have a sizeable sample for our analysis.
-    </p>
-    <p>
-      Using script titles, we searched the TMDB database for associated
-      information about the film. Since IMSDB does not provide TMDB IDs, we were
-      limited to this approach. By using the search API we were able to collect
-      film metadata such as budget, revenue, genre, and release date. We then
-      used the film IDs from the TMDB search to pull character information (e.g.
-      character name, character order) as well as the celebrity information
-      (e.g. celeb name, gender, picture URL).
-    </p>
-    <p>
-      For the movie metadata scraped from TMDB, gender for many actors and
-      actresses, as well as race information was not present. A modified version
-      of the DeepFace prediction package was used to predict the race and
-      gender of each character based on pictures, whose URLs were scraped from
-      TMDB. DeepFace is a face recognition framework that incorporates
-      the use of VGGFace and weights to predict race and gender.
-    </p>
-    <p>
-      Finally, in support of some of the analysis, we needed to match up the
-      characters from TMDB with the characters we parsed from the IMSDB scripts.
-      In order to achieve this, FuzzyMatching techniques were leveraged.
-    </p>
-    <p>
-      The steps performed were as follows:
-    </p>
-    <ol>
-      <li>
-        Clean the names of non-ASCII characters, and sort the tokens
-        alphabetically.
-      </li>
-      <li>
-        Find any names in this movie that match exactly between the data sets,
-        and remove them.
-      </li>
-      <li>
-        Attempt to match the top 15 characters according to a modified longest
-        common subsequence algorithm.
-      </li>
-      <li>(PyLCS was leveraged here.)</li>
-      <li>
-        Using the same, attempt to match the "most talkative" characters from
-        the script.
-      </li>
-      <li>
-        Attempt to run though any remaining characters and match, using a
-        minimum threshold of 40%.
-      </li>
-    </ol>
+    <div style="display: contents" class="mat-body">
+      <p>
+        We first scraped movie scripts from IMSDB. Movie script data is
+        generally unstructured text. This presented a challenge, as some of the
+        analyses we wished to do required having the actual dialogue lines. We
+        thus wrote a program that would:
+      </p>
+      <ol>
+        <li>Find characters in the script</li>
+        <li>Extract the lines for said characters</li>
+        <li>Find scenes within the script</li>
+        <li>Associate scenes to the lines of dialogue and the characters</li>
+      </ol>
+      <p>
+        Due to challenges with processing unstructured text, along with some
+        differences in the way IMSDB handles their pages for scripts, not all
+        movies on IMSDB were able to be processed. We still ended up with over
+        1000 scripts, and so we have a sizeable sample for our analysis.
+      </p>
+      <p>
+        Using script titles, we searched the TMDB database for associated
+        information about the film. Since IMSDB does not provide TMDB IDs, we
+        were limited to this approach. By using the search API we were able to
+        collect film metadata such as budget, revenue, genre, and release date.
+        We then used the film IDs from the TMDB search to pull character
+        information (e.g. character name, character order) as well as the
+        celebrity information (e.g. celeb name, gender, picture URL).
+      </p>
+      <p>
+        For the movie metadata scraped from TMDB, gender for many actors and
+        actresses, as well as race information was not present. A modified
+        version of the DeepFace prediction package was used to predict the race
+        and gender of each character based on pictures, whose URLs were scraped
+        from TMDB. DeepFace is a face recognition framework that incorporates
+        the use of VGGFace and weights to predict race and gender.
+      </p>
+      <p>
+        Finally, in support of some of the analysis, we needed to match up the
+        characters from TMDB with the characters we parsed from the IMSDB
+        scripts. In order to achieve this, FuzzyMatching techniques were
+        leveraged.
+      </p>
+      <p>
+        The steps performed were as follows:
+      </p>
+      <ol>
+        <li>
+          Clean the names of non-ASCII characters, and sort the tokens
+          alphabetically.
+        </li>
+        <li>
+          Find any names in this movie that match exactly between the data sets,
+          and remove them.
+        </li>
+        <li>
+          Attempt to match the top 15 characters according to a modified longest
+          common subsequence algorithm.
+        </li>
+        <li>(PyLCS was leveraged here.)</li>
+        <li>
+          Using the same, attempt to match the "most talkative" characters from
+          the script.
+        </li>
+        <li>
+          Attempt to run though any remaining characters and match, using a
+          minimum threshold of 40%.
+        </li>
+      </ol>
 
-    <p>
-      Additionally, there were cases where the character names from TMDB used
-      full names, while the names from the scripts were nicknames, such as Jo
-      for Joanne. To help, in the last two steps, a map of names to alternatives
-      was used to create possible name representations of the names in TMDB that
-      one might find in the film scripts.
-    </p>
-    <p>
-      Overall, while the results of this aren't perfect, we believe they're
-      adequate enough to support our analysis.
-    </p>
+      <p>
+        Additionally, there were cases where the character names from TMDB used
+        full names, while the names from the scripts were nicknames, such as Jo
+        for Joanne. To help, in the last two steps, a map of names to
+        alternatives was used to create possible name representations of the
+        names in TMDB that one might find in the film scripts.
+      </p>
+      <p>
+        Overall, while the results of this aren't perfect, we believe they're
+        adequate enough to support our analysis.
+      </p>
+    </div>
   </div>
 </app-mainview>

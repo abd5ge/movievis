@@ -20,6 +20,4 @@ export class SceneComponent {
     hideToolbar: true,
   };
 
-  constructor() { }
-
 }

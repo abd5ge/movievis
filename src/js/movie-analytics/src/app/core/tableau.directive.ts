@@ -42,6 +42,9 @@ export class TableauDirective implements AfterViewInit, OnDestroy {
         options.onFirstInteractive = (...args: any[]) => this._onFirstInteractive.next(...args);
         options.device = "desktop";
       }
+      if(!options.width) {
+        // options.width = '75vw'
+      }
       this.viz = new window.tableau.Viz(this.el.nativeElement, this.url, options);
     }
     this.subs.push(this.onTabSwitch.subscribe((e: any) => this.sheetChanged(e.getViz())));
@@ -53,6 +56,7 @@ export class TableauDirective implements AfterViewInit, OnDestroy {
         (<HTMLIFrameElement>frame).classList.add('mat-elevation-z2');
       }
       this.viz.addEventListener(window.tableau.TableauEventName.TAB_SWITCH, (...args: any[]) => this.onTabSwitch.emit(...args));
+      setTimeout(() => this.sheetChanged(this.viz));
   }
 
   ngOnDestroy(): void {

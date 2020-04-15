@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { SceneComponent } from './scene/scene.component';
 import { AnalysisSummaryComponent } from './analysis-summary/analysis-summary.component';
 import { MethodologyComponent } from './methodology/methodology.component';
+import { LandingComponent } from './landing/landing.component';
 
 export const routes: Routes = [
   {
     path: 'landing',
     pathMatch: 'full',
-    component: SceneComponent,
+    component: LandingComponent,
     data: {
       display: 'Landing Page',
       show: false

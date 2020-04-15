@@ -5,11 +5,12 @@ import { MainRoutingModule } from './main-routing-module';
 import { CoreModule } from '../core/core.module';
 import { AnalysisSummaryComponent } from './analysis-summary/analysis-summary.component';
 import { MethodologyComponent } from './methodology/methodology.component';
+import { LandingComponent } from './landing/landing.component';
 
 
 
 @NgModule({
-  declarations: [SceneComponent, AnalysisSummaryComponent, MethodologyComponent],
+  declarations: [SceneComponent, AnalysisSummaryComponent, MethodologyComponent, LandingComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
