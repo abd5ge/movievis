@@ -1,13 +1,12 @@
-<app-mainview color="primary" (activeSheetName)="activeSheetName = $event">
+<app-mainview color="primary" (activeSheetName)="activeSheetName = $event" [filterTo]="sheetFilter">
   <div id="main">
     <div id="text">
       <mat-card [ngSwitch]="activeSheetName">
         <mat-card-header>
-          <mat-card-title>Character Network</mat-card-title>
-          <mat-card-subtitle>{{activeSheetName}}</mat-card-subtitle>
+          <mat-card-title mat-headline>Character Network</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>
+          <p class="mat-body">
             The graph below is a representation of character interactions within the narrative.
             Each character represents a node (circle) where the size of the node is
             dependent on the number of scenes that character appears in.
@@ -21,7 +20,7 @@
     </div>
     <div tableau #viz
     id="viz"
-    url="https://public.tableau.com/views/GT-Movie-Analytics-test/WordsSpokenInFilm?:display_count=y&:origin=viz_share_link"
+    url="https://public.tableau.com/views/final_15868844272500/WordsSpokenInFilm?:display_count=y&publish=yes&:origin=viz_share_link"
     style="display: flex; justify-content: right"
     [options]="vizOptions"></div>
   </div>

@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
-// import {routes} from './../main-routing-module';
 @Component({
   selector: 'app-main',
   templateUrl: './scene.component.html',
   styleUrls: ['./scene.component.css']
 })
 export class SceneComponent {
+
+  sheetFilter = [
+    "Words Spoken In Film",
+    "Text Analysis by Character",
+    "Network of Characters In Film",
+    "Action by Character"
+  ];
 
   activeSheetName: string = '';
 

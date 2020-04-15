@@ -108,3 +108,7 @@ $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-
 body {
   margin: 0;
 }
+
+.mat-button-toggle-label-content {
+  text-align: left;
+}

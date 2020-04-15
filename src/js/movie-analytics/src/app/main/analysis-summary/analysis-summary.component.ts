@@ -7,6 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AnalysisSummaryComponent {
 
+  sheetFilter = [
+    "% Lines Spoken By Gender",
+    "Revenue by Decade",
+    "# of Lines by Race"
+  ];
+
   public readonly vizOptions: any = {
     hideTabs: true,
     hideToolbar: true,

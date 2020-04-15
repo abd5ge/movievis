@@ -5,69 +5,8 @@ import { GITHUB_URL } from 'src/app/constants';
 import { TableauDirective } from '../tableau.directive';
 @Component({
   selector: 'app-mainview',
-  template: `
-  <div id="navbar">
-    <mat-toolbar class="mat-elevation-z6" id="header" color='primary'>
-      <button mat-button style="padding: 0" (click)="router.navigate(['landing'])"><img src="movievislogo.png" alt="image" height="36" width="200"></button>
-      <span class="spacer"></span>
-      <span >
-          <button mat-button
-          (click)="navigate(item)"
-          *ngFor="let item of navItems">{{item.display}}</button>
-      </span>
-    </mat-toolbar>
-  </div>
-  <div *ngIf="showTitle" id="titlebar">
-    <mat-toolbar color='primary'>
-      <span id="title" class="mat-title">
-        <h2 mat-h2>{{title}}</h2>
-      </span>
-    </mat-toolbar>
-  </div>
-  <mat-sidenav-container autosize>
-    <mat-sidenav mode="side" [opened]="showSideNav">
-      <mat-button-toggle-group (change)="clickSheet($event)" [vertical]="true">
-        <mat-button-toggle [id]="item.index" [value]="item.name" [checked]="item.isActive" *ngFor="let item of sheets; trackBy: trackByFunc">
-          {{item.name}}
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <ng-content></ng-content>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  <div id="footer">
-    <mat-toolbar color='primary'>
-      <span class="spacer"></span>
-      <span>
-        <a mat-icon-button disableRipple="true" [href]="GITHUB_URL">
-          <fa-icon [icon]="['fab', 'github']" style="display: flex; justify-content: center" size="3x"></fa-icon>
-        </a>
-      </span>
-    </mat-toolbar>
-  </div>
-  `,
-  styles: [
-    `#navbar {
-      display: block;
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 9999;
-    }`,
-    `#header {
-      display: flex;
-    }`,
-    `#header>span {
-      align-items: center;
-    }`, `.spacer {
-      flex: 1 1 auto;
-    }`, `#title {
-      margin: auto 0;
-    }`
-  ]
+  templateUrl: 'mainview.component.html',
+  styleUrls: ['mainview.component.css']
 })
 export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -81,12 +20,20 @@ export class MainviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() showSideNav: boolean = true;
 
+  @Input() filterTo: string[] = [];
+
   @Output() activeSheetName: EventEmitter<string> = new EventEmitter<string>();
 
   private _sheets: Sheet[] = [];
   @Input()
   set sheets(sheets: any[]) {
-    this._sheets = (sheets || []).filter(x => !x.getIsHidden()).map(x => ({
+
+    let tmp = (sheets || []).filter(x => !x.getIsHidden());
+    if(this.filterTo != null && this.filterTo.length > 0) {
+      tmp = tmp.filter(x => this.filterTo.includes(x.getName()));
+    }
+
+    this._sheets = tmp.map(x => ({
       name: x.getName(),
       index: x.getIndex(),
       workbook: x.getWorkbook(),

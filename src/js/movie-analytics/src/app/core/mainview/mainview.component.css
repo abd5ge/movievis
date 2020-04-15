@@ -1,0 +1,21 @@
+#navbar {
+  display: block;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+#header {
+  display: flex;
+}
+#header > span {
+  align-items: center;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+#title {
+  margin: auto;
+}
