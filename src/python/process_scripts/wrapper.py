@@ -2,6 +2,7 @@ import argparse
 import tempfile
 import os
 import shutil
+import sys
 import json
 
 import grab_scripts
@@ -25,6 +26,10 @@ def main(args):
         gsargs = grab_scripts.parse_args('-o', download_dir, '--title', args.title)
         grab_scripts.main(gsargs)
 
+        if not os.path.exists(os.path.join(download_dir, 'meta')):
+            print('Could not find movie %s on IMSDB' % args.title)
+            sys.exit(1)
+            
         clean_dir = os.path.join(tmp_dir, 'cleaned')
         os.mkdir(clean_dir)
         csargs = clean_script.parse_args('-i', download_dir, '-o', clean_dir)

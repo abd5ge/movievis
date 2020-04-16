@@ -2,18 +2,17 @@ import json
 import os
 import zipfile
 import gc
+from ..utils import LazyLoader
 
 import numpy as np
 import pandas as pd
-#from deepfacelite import VGGFace
-from .deepfacelite import functions
+functions = LazyLoader('functions', globals(), '.deepfacelite.functions')
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from PIL import Image, ImageDraw
-import keras.backend as K
-from keras.layers import Input, Convolution2D, ZeroPadding2D, MaxPooling2D, Flatten, Dense, Dropout, Activation
-from keras.models import Model, Sequential, model_from_json
-from keras.preprocessing.image import load_img, save_img, img_to_array
+K = LazyLoader('K', globals(), 'keras.backend')
+layers = LazyLoader('layers', globals(), 'keras.layers')
+models = LazyLoader('models', globals(), 'keras.models')
 import gdown
 
 '''
@@ -29,50 +28,50 @@ some of the code below
 # gmodel = VGGFace.baseModel()
 
 def baseModel():
-	model = Sequential()
-	model.add(ZeroPadding2D((1,1),input_shape=(224,224, 3)))
-	model.add(Convolution2D(64, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(64, (3, 3), activation='relu'))
-	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model = models.Sequential()
+	model.add(layers.ZeroPadding2D((1,1),input_shape=(224,224, 3)))
+	model.add(layers.Convolution2D(64, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(64, (3, 3), activation='relu'))
+	model.add(layers.MaxPooling2D((2,2), strides=(2,2)))
 
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(128, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(128, (3, 3), activation='relu'))
-	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(128, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(128, (3, 3), activation='relu'))
+	model.add(layers.MaxPooling2D((2,2), strides=(2,2)))
 
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(256, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(256, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(256, (3, 3), activation='relu'))
-	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(256, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(256, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(256, (3, 3), activation='relu'))
+	model.add(layers.MaxPooling2D((2,2), strides=(2,2)))
 
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(512, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(512, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(512, (3, 3), activation='relu'))
-	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(512, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(512, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(512, (3, 3), activation='relu'))
+	model.add(layers.MaxPooling2D((2,2), strides=(2,2)))
 
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(512, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(512, (3, 3), activation='relu'))
-	model.add(ZeroPadding2D((1,1)))
-	model.add(Convolution2D(512, (3, 3), activation='relu'))
-	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(512, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(512, (3, 3), activation='relu'))
+	model.add(layers.ZeroPadding2D((1,1)))
+	model.add(layers.Convolution2D(512, (3, 3), activation='relu'))
+	model.add(layers.MaxPooling2D((2,2), strides=(2,2)))
 
-	model.add(Convolution2D(4096, (7, 7), activation='relu'))
-	model.add(Dropout(0.5))
-	model.add(Convolution2D(4096, (1, 1), activation='relu'))
-	model.add(Dropout(0.5))
-	model.add(Convolution2D(2622, (1, 1)))
-	model.add(Flatten())
-	model.add(Activation('softmax'))
+	model.add(layers.Convolution2D(4096, (7, 7), activation='relu'))
+	model.add(layers.Dropout(0.5))
+	model.add(layers.Convolution2D(4096, (1, 1), activation='relu'))
+	model.add(layers.Dropout(0.5))
+	model.add(layers.Convolution2D(2622, (1, 1)))
+	model.add(layers.Flatten())
+	model.add(layers.Activation('softmax'))
 
 	return model
 
@@ -82,14 +81,14 @@ def raceLoadModel(rmodel, weights_dir):
     #--------------------------
 
     classes = 6
-    base_model_output = Sequential()
-    base_model_output = Convolution2D(classes, (1, 1), name='predictions')(rmodel.layers[-4].output)
-    base_model_output = Flatten()(base_model_output)
-    base_model_output = Activation('softmax')(base_model_output)
+    base_model_output = models.Sequential()
+    base_model_output = layers.Convolution2D(classes, (1, 1), name='predictions')(rmodel.layers[-4].output)
+    base_model_output = layers.Flatten()(base_model_output)
+    base_model_output = layers.Activation('softmax')(base_model_output)
 
     #--------------------------
 
-    race_model = Model(inputs=rmodel.input, outputs=base_model_output)
+    race_model = models.Model(inputs=rmodel.input, outputs=base_model_output)
 
     #--------------------------
 
@@ -119,14 +118,14 @@ def genderLoadModel(gmodel, weights_dir):
     #--------------------------
 
     classes = 2
-    base_model_output = Sequential()
-    base_model_output = Convolution2D(classes, (1, 1), name='predictions')(gmodel.layers[-4].output)
-    base_model_output = Flatten()(base_model_output)
-    base_model_output = Activation('softmax')(base_model_output)
+    base_model_output = models.Sequential()
+    base_model_output = layers.Convolution2D(classes, (1, 1), name='predictions')(gmodel.layers[-4].output)
+    base_model_output = layers.Flatten()(base_model_output)
+    base_model_output = layers.Activation('softmax')(base_model_output)
 
     #--------------------------
 
-    gender_model = Model(inputs=gmodel.input, outputs=base_model_output)
+    gender_model = models.Model(inputs=gmodel.input, outputs=base_model_output)
 
     #--------------------------
 
