@@ -1,12 +1,23 @@
 <app-mainview color="primary" showSideNav="false">
   <div id="main">
-    <h1 mat-h2>Data Acquisition and Integration</h1>
     <div style="display: contents" class="mat-body">
+      <h1 mat-h1>Disclaimer</h1>
       <p>
-        We first scraped movie scripts from IMSDB. Movie script data is
-        generally unstructured text. This presented a challenge, as some of the
-        analyses we wished to do required having the actual dialogue lines. We
-        thus wrote a program that would:
+        The analysis presented on this site should be taken with a heavy grain
+        of salt. This is not research quality, nor was it meant to be. It is,
+        however, meant to highlight what kinds of analysis can be done in an
+        automated fashion in this space with the right tools and people. Below
+        we detail at a high level our methodology and some of the strengths and
+        shortcomings of the approaches we took. For a deeper dive, check out the
+        <a href="https://github.com/abd5ge/movievis">source code</a>.
+      </p>
+      <h1 mat-h2>Data Acquisition and Integration</h1>
+      <p>
+        We first scraped movie scripts from
+        <a href="https://www.imsdb.com/"><b>IMSDB</b></a
+        >. Movie script data is generally unstructured text. This presented a
+        challenge, as some of the analyses we wished to do required having the
+        actual dialogue lines. We thus wrote a program that would:
       </p>
       <ol>
         <li>Find characters in the script</li>
@@ -16,30 +27,37 @@
       </ol>
       <p>
         Due to challenges with processing unstructured text, along with some
-        differences in the way IMSDB handles their pages for scripts, not all
-        movies on IMSDB were able to be processed. We still ended up with over
-        1000 scripts, and so we have a sizeable sample for our analysis.
+        differences in the way <b>IMSDB</b> handles their pages for scripts, not
+        all movies on <b>IMSDB</b> were able to be processed. We still ended up
+        with over 1000 scripts, and so we have a sizeable sample for our
+        analysis.
       </p>
       <p>
-        Using script titles, we searched the TMDB database for associated
-        information about the film. Since IMSDB does not provide TMDB IDs, we
-        were limited to this approach. By using the search API we were able to
-        collect film metadata such as budget, revenue, genre, and release date.
-        We then used the film IDs from the TMDB search to pull character
-        information (e.g. character name, character order) as well as the
-        celebrity information (e.g. celeb name, gender, picture URL).
+        Using script titles, we searched the
+        <a href="https://www.themoviedb.org/"><b>TMDB</b></a> database for
+        associated information about the film. Since <b>IMSDB</b> does not
+        provide <b>TMDB</b> ids (and <b>TMDB</b> does not enable searching by
+        <b>IMSDB</b> id), we were limited to this approach. By using the search
+        API we were able to collect film metadata such as budget, revenue,
+        genre, and release date. We then used the film <b>ID</b>s from the
+        <b>TMDB</b> search to pull character information (e.g. character name,
+        character order) as well as the celebrity information (e.g. celeb name,
+        gender, picture <b>URL</b>).
       </p>
       <p>
-        For the movie metadata scraped from TMDB, gender for many actors and
-        actresses, as well as race information was not present. A modified
-        version of the DeepFace prediction package was used to predict the race
-        and gender of each character based on pictures, whose URLs were scraped
-        from TMDB. DeepFace is a face recognition framework that incorporates
-        the use of VGGFace and weights to predict race and gender.
+        For the movie metadata scraped from <b>TMDB</b>, gender for many actors
+        and actresses, as well as race information was not present. A modified
+        version of the
+        <a href="https://github.com/serengil/deepface">DeepFace</a> prediction
+        package was used to predict the race and gender of each character based
+        on pictures, whose <b>URL</b>s were scraped from <b>TMDB</b>. DeepFace
+        is a face recognition framework that incorporates the use of
+        <b>VGGF</b>ace and weights to predict race and gender.
       </p>
       <p>
         Finally, in support of some of the analysis, we needed to match up the
-        characters from TMDB with the characters we parsed from the IMSDB
+        characters from <b>TMDB</b> with the characters we parsed from the
+        <b>IMSDB</b>
         scripts. In order to achieve this, FuzzyMatching techniques were
         leveraged.
       </p>
@@ -57,29 +75,109 @@
         </li>
         <li>
           Attempt to match the top 15 characters according to a modified longest
-          common subsequence algorithm.
+          common subsequence algorithm. (<a
+            href="https://github.com/Meteorix/pylcs"
+            >PyLCS</a
+          >
+          was leveraged here.)
         </li>
-        <li>(PyLCS was leveraged here.)</li>
         <li>
           Using the same, attempt to match the "most talkative" characters from
           the script.
         </li>
         <li>
           Attempt to run though any remaining characters and match, using a
-          minimum threshold of 40%.
+          minimum threshold of 40% on matching.
         </li>
       </ol>
-
       <p>
-        Additionally, there were cases where the character names from TMDB used
-        full names, while the names from the scripts were nicknames, such as Jo
-        for Joanne. To help, in the last two steps, a map of names to
-        alternatives was used to create possible name representations of the
-        names in TMDB that one might find in the film scripts.
+        Additionally, there were cases where the character names from
+        <b>TMDB</b> used full names, while the names from the scripts were
+        nicknames, such as Jo for Joanne. To help, in the last two steps, a map
+        of names to alternatives was used to create possible name
+        representations of the names in <b>TMDB</b> that one might find in the
+        film scripts.
       </p>
       <p>
-        Overall, while the results of this aren't perfect, we believe they're
-        adequate enough to support our analysis.
+        Finally, it's worth noting that not all scripts on <b>IMSDB</b> actually map to released
+        movies in a nice fashion.  For instance, the Spiderman script was never actually released,
+        and the script for Alien is a very early script that has characters that do not map at all
+        to the movie produced.  In most cases, however, the scripts match reasonably well to the
+        produced movie.
+      </p>
+      <h1 mat-h1>Analysis</h1>
+      <h4 mat-h4>Gender identification</h4>
+      <p>
+        Our assessment of character gender was based upon the gender of
+        character actors. In some instances, actor gender information was
+        unavailable. This would occur when both <b>TMBD</b> lacked information
+        about particular actresses/actors, and our gender predictor did not have
+        a clear picture of the actor/actress in question.
+      </p>
+      <h4 mat-h4>Racial Prediction</h4>
+
+      <p>
+        Our assessment of character race was based upon the race of character
+        actors. We used a pretrained computer vision model (see above), to
+        predict the race of character actors. This is inherently an imperfect
+        process, as the actors' race may not accurately reflect the race of a
+        narrative character. Furthermore, the predictions of race themselves
+        have a degree of inaccuracy. Finally, like in the gender section, if
+        faces in the image could not be detected, the predictor would not run.
+      </p>
+      <h4 mat-h4>Sentiment Analysis</h4>
+
+      <p>
+        <a href="https://www.nltk.org/_modules/nltk/sentiment/vader.html"><b>VADER</b></a>
+        uses a lexical approach coupled with a simple rule-based algorithm for
+        determining intensity of emotion and incorporates punctuation as an
+        important emotional cue. We decided to use the <b>VADER</b> model
+        because it was pre-trained on a relevant type of data (social media).
+        Transferring this model to a different type of data, film narratives and
+        seeing how well it performs was the intention. We think
+        <b>VADER</b> performed well at the task, but you can look for yourself
+        on this website!
+      </p>
+      <h4 mat-h4>Network Analysis</h4>
+
+      <p>
+        Network graphs are a great way for us to display the interconnectivity
+        of narrative characters. The limitations in network graphs for this
+        project stem from anomalies in parsing the film scripts. Sometimes, a
+        character name may have been miss-transcribed.  Scenes were automatically
+        detected based on the script, characters that might actually be in the same
+        scene may be separated due to a false detection of a scene transition. Finally, we only
+        detected characters which have lines of dialogue as being in a scene, so
+        silent characters would not be represented.
+      </p>
+      <h4 mat-h4>Power/Agency</h4>
+
+      <p>
+        Our power agency analysis is a bag-of-words approach using a lexicon
+        (i.e. a dictionary of words). It does not have any additional rule-based
+        algorithms, like the <b>VADER</b> sentiment analysis. Our approach is
+        simplistic, and the context of words is not considered in the analysis.
+        This analysis provides a word frequency count for verbs that are
+        classified as positive or negative power. The limitations in this
+        approach are clear, word context can provide significant meaning. So,
+        there is room to grow for this analysis. Nonetheless, our approach
+        provides valuable information about the power/Agency narrative
+        characters convey based on their word choice.
+      </p>
+      <h4 mat-h4>Bechdel Test</h4>
+
+      <p>
+        Programming a human heuristic is a difficult task. For example,
+        determining what constitutes two characters speaking directly to
+        one-another is a bit fuzzy. Our determination was that if two female
+        characters appeared in a scene together, that satisfied the first
+        condition of the test. If at least one of those female characters spoke,
+        and her line did not contain a male name, we considered conditions two
+        and three satisfied.  Or at least that's what we attempted.  While doing
+        this analysis, we discovered a variety of issues that prevented us
+        from properly detecting scenes that pass the Bechdel Test.  Instead
+        we present in our analysis manual verification of the Bechdel Test
+        with data scraped from this <a href="https://bechdeltest.com/">site</a>.
       </p>
     </div>
   </div>
