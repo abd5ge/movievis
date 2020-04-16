@@ -12,15 +12,15 @@ export const routes: Routes = [
     pathMatch: 'full',
     component: LandingComponent,
     data: {
-      display: 'Landing Page',
-      show: false
+      display: 'General Analysis',
+      show: true
     },
   },
   {
     path: 'summary',
     component: AnalysisSummaryComponent,
     data: {
-      display: 'Analysis',
+      display: 'Film Analysis',
       show: true
     }
   },
