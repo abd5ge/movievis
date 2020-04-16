@@ -31,9 +31,9 @@ export class TableauDirective implements AfterViewInit, OnDestroy {
   private sheetChanged(viz: any): void {
     const size = viz.getWorkbook().getActiveSheet().getSize();
     const ele: HTMLElement = this.el.nativeElement.firstChild;
-    ele.style.maxHeight = size.maxSize.height + 'px';
-    ele.style.minHeight = size.minSize.height + 'px';
-    ele.style.height = Math.round((size.minSize.height + size.maxSize.height)/2) + 'px';
+    // ele.style.maxHeight = size.maxSize.height + 'px';
+    // ele.style.minHeight = size.minSize.height + 'px';
+    // ele.style.height = Math.round((size.minSize.height + size.maxSize.height)/2) + 'px';
   }
 
   ngAfterViewInit(): void {

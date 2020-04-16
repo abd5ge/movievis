@@ -4,6 +4,7 @@ import { SceneComponent } from './scene/scene.component';
 import { AnalysisSummaryComponent } from './analysis-summary/analysis-summary.component';
 import { MethodologyComponent } from './methodology/methodology.component';
 import { LandingComponent } from './landing/landing.component';
+import { CharacterComponent } from './character/character.component';
 
 export const routes: Routes = [
   {
@@ -29,6 +30,14 @@ export const routes: Routes = [
     data: {
       display: 'Scene Analysis',
       show: false
+    }
+  },
+  {
+    path: 'character',
+    component: CharacterComponent,
+    data: {
+      display: 'Character Analysis',
+      show: true
     }
   },
   {
