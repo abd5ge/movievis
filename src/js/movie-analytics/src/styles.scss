@@ -8,100 +8,70 @@
 
 
 // /* go to http://mcg.mbitson.com/ to change this; you'll want to output in 'Angular JS 2 (Material 2)' format */
-// $md-movieprimary: (
-//     50 : #feefe0,
-//     100 : #fcd8b3,
-//     200 : #fabe80,
-//     300 : #f8a34d,
-//     400 : #f79026,
-//     500 : #f57c00,
-//     600 : #f47400,
-//     700 : #f26900,
-//     800 : #f05f00,
-//     900 : #ee4c00,
-//     A100 : #ffffff,
-//     A200 : #ffe9e1,
-//     A400 : #ffc3ae,
-//     A700 : #ffb095,
-//     contrast: (
-//         50 : #000000,
-//         100 : #000000,
-//         200 : #000000,
-//         300 : #000000,
-//         400 : #000000,
-//         500 : #000000,
-//         600 : #000000,
-//         700 : #000000,
-//         800 : #ffffff,
-//         900 : #ffffff,
-//         A100 : #000000,
-//         A200 : #000000,
-//         A400 : #000000,
-//         A700 : #000000,
-//     )
-// );
+
+$md-primary: (
+    50 : #e1e7ee,
+    100 : #b3c2d4,
+    200 : #8199b8,
+    300 : #4f709b,
+    400 : #295285,
+    500 : #033370,
+    600 : #032e68,
+    700 : #02275d,
+    800 : #022053,
+    900 : #011441,
+    A100 : #7692ff,
+    A200 : #4369ff,
+    A400 : #1041ff,
+    A700 : #0032f6,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
 
 
-// $md-moviesecondary: (
-//     50 : #e1f3fc,
-//     100 : #b3e1f7,
-//     200 : #81cdf2,
-//     300 : #4fb9ed,
-//     400 : #29aae9,
-//     500 : #039be5,
-//     600 : #0393e2,
-//     700 : #0289de,
-//     800 : #027fda,
-//     900 : #016dd3,
-//     A100 : #fbfdff,
-//     A200 : #c8e1ff,
-//     A400 : #95c5ff,
-//     A700 : #7bb8ff,
-//     contrast: (
-//         50 : #000000,
-//         100 : #000000,
-//         200 : #000000,
-//         300 : #000000,
-//         400 : #000000,
-//         500 : #ffffff,
-//         600 : #ffffff,
-//         700 : #ffffff,
-//         800 : #ffffff,
-//         900 : #ffffff,
-//         A100 : #000000,
-//         A200 : #000000,
-//         A400 : #000000,
-//         A700 : #000000,
-//     )
-// );
 
-$movie-app-primary: mat-palette($mat-indigo);
+
+// $movie-app-primary: mat-palette($mat-indigo);
 $movie-app-accent: mat-palette($mat-amber);
 // // $movie-app-primary: mat-palette($mat-orange);
 // // $movie-app-accent: mat-palette($mat-light-blue);
 
 
-// $movie-app-primary: mat-palette($md-movieprimary);
+$movie-app-primary: mat-palette($md-primary);
 // $movie-app-accent: mat-palette($md-moviesecondary);
 $movie-app-warn: mat-palette($mat-red);
 
-// // $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
 $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
+// $movie-app-theme: mat-light-theme($movie-app-primary, $movie-app-accent, $movie-app-warn);
 
-// @mixin mix-app-theme($movie-app-theme) {
-//   $primary: map-get($movie-app-theme, primary);
+@mixin mix-app-theme($movie-app-theme) {
+  $primary: map-get($movie-app-theme, primary);
 
-//   .mat-button-toggle-checked {
-//     background-color: mat-color($primary);
-//     font-weight: bold;
+  .mat-button-toggle-checked {
+    background-color: mat-color($primary);
+    font-weight: bold;
 
-//     .mat-button-toggle-label-content {
-//       color: $light-primary-text;
-//     }
-//   }
-// }
+    .mat-button-toggle-label-content {
+      color: $light-primary-text;
+    }
+  }
+}
 
-// @include mix-app-theme($movie-app-theme);
+@include mix-app-theme($movie-app-theme);
 
 @include angular-material-theme($movie-app-theme);
 

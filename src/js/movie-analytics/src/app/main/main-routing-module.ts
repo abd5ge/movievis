@@ -19,7 +19,7 @@ export const routes: Routes = [
     path: 'summary',
     component: AnalysisSummaryComponent,
     data: {
-      display: 'Summary Analysis',
+      display: 'Analysis',
       show: true
     }
   },
@@ -28,7 +28,7 @@ export const routes: Routes = [
     component: SceneComponent,
     data: {
       display: 'Scene Analysis',
-      show: true
+      show: false
     }
   },
   {

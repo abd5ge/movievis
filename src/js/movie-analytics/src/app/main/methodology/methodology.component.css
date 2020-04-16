@@ -1,5 +1,7 @@
 #main {
   margin: auto;
-  min-width: 600px;
+  /* min-width: 600px; */
   padding: 8px;
+  /* max-width: 80vw; */
+  width: 55em;
 }
