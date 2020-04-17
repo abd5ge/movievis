@@ -148,7 +148,7 @@ def parse_args():
         required=True)
     parser.add_argument('-o', '--output', help='output directory', required=True)
     # located here, under 'download the verbs': https://homes.cs.washington.edu/~msap/movie-bias/
-    parser.add_argument('--agency', help='path to the power/agency dictionary', default=os.path.join(os.path.(__file__), 'agency_power.csv'))
+    parser.add_argument('--agency', help='path to the power/agency dictionary', default=os.path.join(os.path.dirname(__file__), 'agency_power.csv'))
     return parser.parse_args()
 
 if __name__ == '__main__':
