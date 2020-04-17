@@ -9,13 +9,8 @@ import numpy as np
 from pandas import json_normalize
 import spacy
 import nltk
-
-try:
-    from nltk.corpus import names
-except LookupError:
-    #another wired issues that sometimes happens. Need to download names because it is not installing with nltk
-    nltk.download("names")
-    from nltk.corpus import names
+nltk.download('names')
+from nltk.corpus import names
 
 #---- get total character lines/scence appearences/network graph ----#
 def get_lines_appearences_graph(dialog):
