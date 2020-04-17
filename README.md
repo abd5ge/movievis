@@ -37,7 +37,7 @@ To use this project, download this repo to a local environment.  We recommend us
 
     conda create --name <environment> python=3.6
     conda activate <environment>
-    pip install -r src/python/requirements.txt
+    pip install -r src/python/<platform>-requirements.txt
     python -m spacy download en_core_web_sm
 
 Please note, if you are using a virtual environment for this project you will need to install opencv-python in your local environment and copy this package from it's site package location over to the virtualenv. 
