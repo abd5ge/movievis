@@ -146,3 +146,4 @@ dmypy.json
 **downloaded.json
 src/python/process_scripts/weights/**
 src/python/process_scripts/nicknames.csv
+data/**

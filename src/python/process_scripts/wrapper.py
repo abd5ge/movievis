@@ -76,6 +76,8 @@ def main(args):
         copy_files(celeb_images, os.path.join(output_dir, 'celeb_images'))
         copy_files(tmdb_dir, output_dir)
         copy_files(os.path.join(clean_dir, 'scripts'), os.path.join(output_dir, 'scripts'))
+        copy_files(os.path.join(mapped_dir, 'good'), os.path.join(output_dir, 'dialog'))
+        copy_files(os.path.join(mapped_dir, 'bad'), os.path.join(output_dir, 'dialog'))
 
         # for filename in os.listdir(os.path.join(clean_dir, 'scripts')):
         #     fullname = os.path.join(clean_dir, 'scripts', filename)

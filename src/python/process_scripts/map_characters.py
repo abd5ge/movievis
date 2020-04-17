@@ -9,7 +9,7 @@ import itertools
 import concurrent.futures
 
 
-#import editdistance
+# import editdistance
 import pandas as pd
 try:
     import pylcs
@@ -145,7 +145,7 @@ class CharacterMapper():
         self.parsed_cleaned_names = {x: clean_name(x) for x in self.parsed_characters}
         self.actual_cleaned_names = {x: clean_name(x) for x in self.actual_characters}
         self.dialog_count = utils.get_dialog_count(self.dialog)
-        self.lev = LevSimilarity(threshold=0.8)
+        # self.lev = LevSimilarity(threshold=0.8)
         self.lcs = LCSSimilarity()
         self.lcsdiff = LCSDiffSimilarity(threshold=0.8)
         self.sim = self.lcsdiff
@@ -732,29 +732,29 @@ class LCSDiffSimilarity(Similarity):
     def is_closer(self,previous_result, current_result):
         return previous_result < current_result
 
-class LevSimilarity(Similarity):
+# class LevSimilarity(Similarity):
 
-    def __init__(self, threshold=0.0):
-        self.threshold = threshold
+#     def __init__(self, threshold=0.0):
+#         self.threshold = threshold
 
-    def get_similarity(self, name1, name2):
-        total = float(len(name1) + len(name2))
-        max_val = max(len(name1), len(name2))
-        return float((max_val - editdistance.eval(name1, name2))*2) / total
+#     def get_similarity(self, name1, name2):
+#         total = float(len(name1) + len(name2))
+#         max_val = max(len(name1), len(name2))
+#         return float((max_val - editdistance.eval(name1, name2))*2) / total
 
-    def is_within_threshold(self,result, threshold=None):
-        if threshold is None:
-            threshold = self.threshold
-        return result >= threshold
+#     def is_within_threshold(self,result, threshold=None):
+#         if threshold is None:
+#             threshold = self.threshold
+#         return result >= threshold
 
-    def get_start_compare(self):
-        return -1.0
+#     def get_start_compare(self):
+#         return -1.0
     
-    def is_exact_match(self, name1, name2):
-        return self.get_similarity(name1, name2) > 0.995
+#     def is_exact_match(self, name1, name2):
+#         return self.get_similarity(name1, name2) > 0.995
 
-    def is_closer(self, previous_result, current_result):
-        return previous_result < current_result
+#     def is_closer(self, previous_result, current_result):
+#         return previous_result < current_result
 
 class NicknameMap():
 

@@ -32,34 +32,47 @@ We visualize the data and analysis collected through Tableau. We use Tableau pub
 
 This project has been designed to allow end users to easily collect film data for their own analysis. We've provided the source files of our analysis here. However, installing and running this project will not provide any analyzed results. Running this project will collect data so that the user can implement their own analysis. Feel free to use our text analysis & network mapping as a part of your project, just remember to install the py packages for those scripts.
 
-To use this project, download this repo to a local environment. Once you've downloaded, cd into the project space using a terminal or command line interface. 
+To use this project, download this repo to a local environment.  We recommend using anaconda for this, but this will probably work in a raw python environment
+(just skip the anaconda specific steps). Navigate to the directory where you cloned the repository, then run the following:
 
-    cd movievis/src/python/process_scripts/
-    pip install -r requirements.txt
+    conda create --name <environment> python=3.6
+    conda activate <environment>
+    pip install -r src/python/requirements.txt
+    python -m spacy download en_core_web_sm
 
 Please note, if you are using a virtual environment for this project you will need to install opencv-python in your local environment and copy this package from it's site package location over to the virtualenv. 
 
-Also note, this project installs tensorflow and it's dependencies.
+Also note, this project installs tensorflow and its dependencies.
 
 ## How To Use
 
 First, register for a [developer account](https://developers.themoviedb.org/3) with the TMDb. Save this key as we will use it in our API calls.
 
-To use Movie Vis cd into the project space and run the wrapper py file. The following serves only as an example:
+To use Movie Vis run the wrapper py file. This script will start by scraping IMSDB for the movie script, and then
+pulling data from TMDB and parse the movie script for various elements, like characters and dialog.
 
-    cd movievis/src/python/process_scripts/
-    mkdir output
-    python wrapper.py --title <film_title> -o <output_directory> --tmdb_key <tmdb_key>
+E.g.
+
+    python src/python/process_scripts/wrapper.py --title <film_title> -o <output_directory> --tmdb_key <tmdb_key>
 
 Example: 
 
-    python wrapper.py --title "10 things i hate about you" -o output --tmdb_key 1234567891010987654321
+    python src/python/process_scripts/wrapper.py --title "A Few Good Men" -o data --tmdb_key 1234567891010987654321
 
 For more information use the --help argument to see a list of available options. 
 
-    python wrapper.py --help
+    python src/python/process_scripts/wrapper.py --help
 
 The data collected will be written to the folder you used in your -OUTPUT argument.
+
+For the actual analysis data, the two relevant scripts are text_analysis.py and scene_analysis.py located in src/python/analysis/models.  These rely on the output of wrapper.py above.
+
+Examples:
+
+    python src/python/analysis/models/text_analysis.py -i data/dialog -o ./data/text_analysis
+
+    python src/python/analysis/models/scene_analysis.py -i data/dialog -o data/scene_analysis --cast_data data/film_characters.csv
+
 
 ## Demo
 

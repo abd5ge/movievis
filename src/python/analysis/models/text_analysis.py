@@ -11,8 +11,6 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import collections
 from nltk.corpus import stopwords
 
-# import sys
-# sys.path.append(r"C:/Users/JoshuaAndrews.AzureAD/Desktop/DataVis/project/movie-analytics/src/python/analysis/models")
 import power_agency_analysis as pa
 import wrangle_functions as wrangle
 
@@ -149,7 +147,7 @@ def parse_args():
         required=True)
     parser.add_argument('-o', '--output', help='output directory', required=True)
     # located here, under 'download the verbs': https://homes.cs.washington.edu/~msap/movie-bias/
-    parser.add_argument('--agency', help='path to the power/agency dictionary', required=True)
+    parser.add_argument('--agency', help='path to the power/agency dictionary', default=os.path.join(os.path.dirname(__file__), 'agency_power.csv'))
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -161,4 +159,3 @@ if __name__ == '__main__':
         main(args.input, args.output, args.agency)
 
 
-# main(r"C:\Users\JoshuaAndrews.AzureAD\Desktop\processed_scripts\aliens.json", r"C:\Users\JoshuaAndrews.AzureAD\Desktop", r"C:\Users\JoshuaAndrews.AzureAD\Desktop\agency_power.csv")

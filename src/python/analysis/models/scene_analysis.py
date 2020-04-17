@@ -17,15 +17,6 @@ except LookupError:
     nltk.download("names")
     from nltk.corpus import names
 
-# #switch these out with args
-# with open(r"C:\Users\JoshuaAndrews.AzureAD\Desktop\mapped_scripts\good\aliens.json") as read_file:
-#     script = json.load(read_file)
-
-# celeb_info = pd.read_csv(r"C:\Users\JoshuaAndrews.AzureAD\Desktop\full_celeb_film_info.csv")
-
-# dialog_json = script["dialog"]
-# dialog = json_normalize(dialog_json)
-
 #---- get total character lines/scence appearences/network graph ----#
 def get_lines_appearences_graph(dialog):
     char_appearences_dict = {}
@@ -79,13 +70,9 @@ def bechdel_test(script, celeb_info):
     film_celebs = celeb_info[celeb_info["film_id"] == int(script["tmdb_id"])]
     #generate a dictionary with character names and genders
     char_gender_dict = {}
-    # for i in range(len(film_celebs)):
     for index, row in film_celebs.iterrows():
         #need to make names lower case
-        # key = str(celeb_info["character"][i])
-        # key = key.lower()
         key = str(row['character']).lower()
-        # val = celeb_info["gender"][i]
         val = row["gender"]
         char_gender_dict[key] = val
     #using nltk corpus names to get names with most associated gender
@@ -100,38 +87,28 @@ def bechdel_test(script, celeb_info):
         names_dict[names_key] = names_val
     bechdel_per_scene = np.empty((0,3), int)
     #I have to provide a path due some download issues that sometimes occur
-    # nlp_model = spacy.load(r'C:\Users\JoshuaAndrews.AzureAD\anaconda3\envs\movieNLP\Lib\site-packages\en_core_web_sm\en_core_web_sm-2.0.0')
     nlp_model = spacy.load('en_core_web_sm')
-    # print(names_dict)
     for scene in set(dialog["scene"]):
         two_women = 0
         talk_male = 0
-        # scene_temp = pd.DataFrame.reset_index(dialog.loc[dialog["scene"] == scene])
         scene_temp = dialog.loc[dialog["scene"] == scene]
         scene_chars = set(scene_temp["character"])
         # check for 2 or more female characters in scene
         if len(scene_chars) < 2:
             bechdel_per_scene = np.append(bechdel_per_scene, [[scene, two_women, talk_male]], axis=0)
             continue
-        # scene_genders = {}
         female_count = 0
         for char in scene_chars:
             char = char.lower()
             gender = char_gender_dict.get(char, -1)
             if gender == 1:
                 female_count += 1
-            # if char in char_gender_dict and char_gender:
-                # scene_genders[char] = char_gender_dict[char]
-        # female_sum = sum(value == 1 for value in scene_genders.values())
-        # if female_sum >= 2:
-            # two_women = 1
         if female_count > 1:
             two_women = 1
 
         #check lines for male references
         male_check = []
         for line in scene_temp["line"]:
-            # line = scene_temp["line"][0]
             #Using spacy tokenization for named entity recognition
             doc = nlp_model(line)
             tokens = [token.text for token in doc]
@@ -139,23 +116,12 @@ def bechdel_test(script, celeb_info):
             for token in tokens:
                 if token in names_dict:
                     persons[token] = names_dict[token]
-            # for key in persons:
-            #     if persons[key] == 'male':
-            #         male_check.append(1)
-            #     else:
-            #         male_check.append(0)
             talk_male = 1 if 'male' in persons.values() else 0
             if talk_male > 0:
                 break
-            # if sum(male_check) > 0:
-            #     talk_male = 1
-            #     break
-            # else:
-            #     talk_male = 0
         bechdel_per_scene = np.append(bechdel_per_scene, [[scene, two_women, talk_male]], axis=0)
     return bechdel_per_scene
 
-# got this from my HW 1 assignment
 # got this from my HW 1 assignment
 def show_graph_info(adjacency_list):
     """
@@ -206,21 +172,14 @@ def analyze_scene(jsonfile, celeb_info_file, output_dir):
     dialog = json_normalize(dialog_json)
     celeb_info = get_celeb_info(celeb_info_file)
     lines, appearences, graph = get_lines_appearences_graph(dialog)
-    # print('lines', lines)
-    # print('appearances', appearences)
-    # print('graph', graph)
     graph_output_name = os.path.join(output_dir, 'adjacency', '%s_adjacency.csv' % os.path.splitext(os.path.basename(jsonfile))[0])
     bechdel_output_name = os.path.join(output_dir, 'bechdel', '%s_bechdel.csv' % os.path.splitext(os.path.basename(jsonfile))[0])
-    # print(appearences, graph)
     ad_list = create_adjacency_list(script, graph)
-    # print(ad_list)
     write_adjacency_graph(script, graph, graph_output_name)
-    # show_graph_info(ad_list)
     bechdel = bechdel_test(script, celeb_info)
     if bechdel is None:
         return
     write_bechdel_info(script, bechdel, bechdel_output_name)
-    # print(bechdel)
 
 def write_adjacency_graph(script, graph, fname):
     edges = {}
@@ -263,7 +222,7 @@ def parse_args(*args):
     parser.add_argument('-i', '--input', help='The input; accepts either a directory or a file; if a directory, then will do analysis on the entire directory',
         required=True)
     parser.add_argument('-o', '--output', help='output directory', required=True)
-    parser.add_argument('--cast_data', help='Path to a csv export of the cast information', default='full_celeb_film_info.csv')
+    parser.add_argument('--cast_data', help='Path to a csv export of the cast information', required=True)
     if len(args) > 0:
         return parser.parse_args(args)
     return parser.parse_args()
@@ -287,7 +246,7 @@ def main(args):
     if os.path.isfile(input_dir):
         analyze_scene(input_dir, cast_data, output_dir)
         return
-    with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=2) as executor:
         futures = {}
         for jsonfile in [x for x in os.listdir(input_dir) if x.endswith('.json')]:
             print('Analyzing %s' % jsonfile)
@@ -303,15 +262,5 @@ def main(args):
 
 
 if __name__ == '__main__':
-    # args = parse_args('-i', 'mapped_scripts/full/12-years-a-slave.json', '-o','tmp')
     args = parse_args()
     main(args)
-
-#switch these out with args
-# with open(r"C:\Users\JoshuaAndrews.AzureAD\Desktop\mapped_scripts\good\aliens.json") as read_file:
-#     script = json.load(read_file)
-
-# celeb_info = pd.read_csv(r"C:\Users\JoshuaAndrews.AzureAD\Desktop\full_celeb_film_info.csv")
-
-# dialog_json = script["dialog"]
-# dialog = json_normalize(dialog_json)
