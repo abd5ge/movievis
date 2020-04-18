@@ -6,7 +6,9 @@ from ..utils import LazyLoader
 
 import numpy as np
 import pandas as pd
-functions = LazyLoader('functions', globals(), '.deepfacelite.functions')
+
+functions = LazyLoader('functions', globals(), 'lib.collect_data.deepfacelite.functions')
+# from lib.collect_data.deepfacelite import functions
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from PIL import Image, ImageDraw

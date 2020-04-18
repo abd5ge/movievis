@@ -9,7 +9,6 @@ import numpy as np
 from pandas import json_normalize
 import spacy
 import nltk
-nltk.download('names')
 from nltk.corpus import names
 
 #---- get total character lines/scence appearences/network graph ----#
@@ -56,7 +55,7 @@ def create_adjacency_list(script, graph):
 #checking for more than two women in a scene is not initiated
 def bechdel_test(script, celeb_info):
     if int(script["tmdb_id"]) not in set(celeb_info["film_id"]):
-        print('could not find script in celeb_info', script.title)
+        print('could not find script in celeb_info', script['title'])
         return None
 
     dialog_json = script["dialog"]
@@ -231,6 +230,7 @@ def get_dialog_file(filename):
         return script
 
 def main(args):
+    nltk.download('names')
     input_dir = args.input
     output_dir = args.output
     cast_data = args.cast_data
