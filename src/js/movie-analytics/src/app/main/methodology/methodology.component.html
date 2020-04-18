@@ -51,7 +51,7 @@
         package was used to predict the race and gender of each character based
         on pictures, whose <b>URL</b>s were scraped from <b>TMDB</b>. DeepFace
         is a face recognition framework that incorporates the use of
-        <b>VGGF</b>ace and weights to predict race and gender.
+        <b>VGGFace</b> and weights to predict race and gender.
       </p>
       <p>
         Finally, in support of some of the analysis, we needed to match up the
@@ -105,11 +105,11 @@
         produced movie.
       </p>
       <h1 mat-h1>Analysis</h1>
-      <h4 mat-h4>Gender identification</h4>
+      <h4 mat-h4>Gender Identification</h4>
       <p>
         Our assessment of character gender was based upon the gender of
         character actors. In some instances, actor gender information was
-        unavailable. This would occur when both <b>TMBD</b> lacked information
+        unavailable. This would occur when both <b>TMDB</b> lacked information
         about particular actresses/actors, and our gender predictor did not have
         a clear picture of the actor/actress in question.
       </p>
@@ -143,8 +143,8 @@
         Network graphs are a great way for us to display the interconnectivity
         of narrative characters. The limitations in network graphs for this
         project stem from anomalies in parsing the film scripts. Sometimes, a
-        character name may have been miss-transcribed.  Scenes were automatically
-        detected based on the script, characters that might actually be in the same
+        character name may have been mistranscribed.  Scenes were automatically
+        detected based on the script; characters that might actually be in the same
         scene may be separated due to a false detection of a scene transition. Finally, we only
         detected characters which have lines of dialogue as being in a scene, so
         silent characters would not be represented.
@@ -158,9 +158,9 @@
         simplistic, and the context of words is not considered in the analysis.
         This analysis provides a word frequency count for verbs that are
         classified as positive or negative power. The limitations in this
-        approach are clear, word context can provide significant meaning. So,
+        approach are clear; word context can provide significant meaning. So,
         there is room to grow for this analysis. Nonetheless, our approach
-        provides valuable information about the power/Agency narrative
+        provides valuable information about the Power/Agency narrative
         characters convey based on their word choice.
       </p>
       <h4 mat-h4>Bechdel Test</h4>
