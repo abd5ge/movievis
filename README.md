@@ -30,7 +30,7 @@ We visualize the data and analysis collected through Tableau. We use Tableau pub
 
 ## Installation
 
-This project has been designed to allow end users to easily collect film data for their own analysis. We've provided the source files of our analysis here. However, installing and running this project will not provide any analyzed results. Running this project will collect data so that the user can implement their own analysis. Feel free to use our text analysis & network mapping as a part of your project, just remember to install the py packages for those scripts.
+This project has been designed to allow end users to easily collect film data for their own analysis. We've provided the source files of our analysis here. Running this project will collect data so that the user can implement their own analysis. Feel free to use our text analysis & network mapping as a part of your project, just remember to install the py packages for those scripts.
 
 To use this project, download this repo to a local environment.  We recommend using anaconda for this, but this will probably work in a raw python environment
 (just skip the anaconda specific steps). Navigate to the directory where you cloned the repository, then run the following:
